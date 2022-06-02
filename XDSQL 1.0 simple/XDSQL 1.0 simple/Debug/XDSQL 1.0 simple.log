@@ -1,41 +1,47 @@
-﻿生成启动时间为 2022-04-23 15:49:03。
-日志记录详细程度设置为: Normal。     1>项目“D:\DBMS开发\2022版本\实验用\基础版本\XDSQL 1.0 simple\XDSQL 1.0 simple\XDSQL 1.0 simple.vcxproj”在节点 2 上(Rebuild 个目标)。
-     1>_PrepareForClean:
-         正在删除文件“Debug\XDSQL 1.0 simple.tlog\XDSQL 1.0 simple.lastbuildstate”。
-       InitializeBuildStatus:
-         正在对“Debug\XDSQL 1.0 simple.tlog\unsuccessfulbuild”执行 Touch 任务。
-       BisonTarget:
-         Process "gram.y" bison file
-         cmd.exe /D /C "C:\Users\86186\AppData\Local\Temp\tmpfc4c687b280944a79234049cbfb4e15f.cmd"
-         
-         start /B /WAIT /D "D:\DBMS开发\2022版本\实验用\基础版本\XDSQL 1.0 simple\XDSQL 1.0 simple\" win_bison.exe --output="gram.tab.cpp" --defines="gram.tab.h"  "gram.y"
-         exit /b %errorlevel%
-         gram.y:224.12-14: error: symbol cal is used, but is not defined as a token and has no rules
-         gram.y:271.63-72: error: symbol conditions is used, but is not defined as a token and has no rules
-         gram.y:81.21-31: error: symbol deletetable is used, but is not defined as a token and has no rules
-         gram.y:288.11-18: error: symbol tablecol is used, but is not defined as a token and has no rules
-         gram.y:227.28-29: error: $1 of 'colvalue' has no declared type
-         gram.y:273.49-50: error: $6 of 'updatetable' has no declared type
-         gram.y:289.12-13: error: $1 of 'setconf' has no declared type
-         gram.y:293.12-13: error: $1 of 'setconf' has no declared type
-         gram.y:294.28-29: error: $3 of 'setconf' has no declared type
-         gram.y:301.29-30: error: $1 of 'tablecols' has no declared type
-         gram.y:305.29-30: error: $3 of 'tablecols' has no declared type
-         gram.y:320.32-33: error: $6 of 'selecttable' has no declared type
-     1>D:\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets(55,5): error MSB3721: 命令“
-D:\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets(55,5): error MSB3721: start /B /WAIT /D "D:\DBMS开发\2022版本\实验用\基础版本\XDSQL 1.0 simple\XDSQL 1.0 simple\" win_bison.exe --output="gram.tab.cpp" --defines="gram.tab.h"  "gram.y"
-D:\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets(55,5): error MSB3721: exit /b %errorlevel%”已退出，返回代码为 1。
-     1>已完成生成项目“D:\DBMS开发\2022版本\实验用\基础版本\XDSQL 1.0 simple\XDSQL 1.0 simple\XDSQL 1.0 simple.vcxproj”(Rebuild 个目标)的操作 - 失败。
-
-生成失败。
-
-       “D:\DBMS开发\2022版本\实验用\基础版本\XDSQL 1.0 simple\XDSQL 1.0 simple\XDSQL 1.0 simple.vcxproj”(Rebuild 目标) (1) ->
-       (BisonTarget 目标) -> 
-         D:\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets(55,5): error MSB3721: 命令“
-       D:\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets(55,5): error MSB3721: start /B /WAIT /D "D:\DBMS开发\2022版本\实验用\基础版本\XDSQL 1.0 simple\XDSQL 1.0 simple\" win_bison.exe --output="gram.tab.cpp" --defines="gram.tab.h"  "gram.y"
-       D:\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets(55,5): error MSB3721: exit /b %errorlevel%”已退出，返回代码为 1。
-
-    0 个警告
-    1 个错误
-
-已用时间 00:00:00.29
+﻿  Process "gram.y" bison file
+  Process "scan.l" flex file
+  gram.tab.cpp
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.tab.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.tab.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.tab.cpp(1265,5): warning C4065: switch 语句包含“default”但是未包含“case”标签
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.y(200,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.y(199,36): warning C4018: “<”: 有符号/无符号不匹配
+  QueryProcessor.cpp
+  scan.flex.cpp
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.tab.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(49,1): warning C4005: “INT8_MIN”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(59): message : 参见“INT8_MIN”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(50,1): warning C4005: “INT16_MIN”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(62): message : 参见“INT16_MIN”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(51,1): warning C4005: “INT32_MIN”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(65): message : 参见“INT32_MIN”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(53,1): warning C4005: “INT8_MAX”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(68): message : 参见“INT8_MAX”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(54,1): warning C4005: “INT16_MAX”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(71): message : 参见“INT16_MAX”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(55,1): warning C4005: “INT32_MAX”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(74): message : 参见“INT32_MAX”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(57,1): warning C4005: “UINT8_MAX”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(77): message : 参见“UINT8_MAX”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(58,1): warning C4005: “UINT16_MAX”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(80): message : 参见“UINT16_MAX”的前一个定义
+D:\Program Files\Microsoft Visual Studio\VC\Tools\MSVC\14.29.30133\include\stdint.h(59,1): warning C4005: “UINT32_MAX”: 宏重定义
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\scan.flex.cpp(83): message : 参见“UINT32_MAX”的前一个定义
+  test.cpp
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\test.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\codes\XDSQL-1.0\XDSQL 1.0 simple\XDSQL 1.0 simple\gram.tab.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  正在生成代码...
+QueryProcessor_simple.lib(QueryProcessor.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“QueryProcessor_simple.lib(QueryProcessor.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+values.lib(values.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“values.lib(values.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+colinf.lib(colinf.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“colinf.lib(colinf.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+colvalue.lib(colvalue.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“colvalue.lib(colvalue.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+colsvalue.lib(colsvalue.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“colsvalue.lib(colsvalue.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+condition.lib(condition.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“condition.lib(condition.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+MetaDataManager.lib(MetaDataManager.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“MetaDataManager.lib(MetaDataManager.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+StorageEngine.lib(StorageEngine.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“StorageEngine.lib(StorageEngine.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+StorageNode.lib(StorageNode.obj) : warning LNK4099: 未找到 PDB“”(使用“StorageNode.lib(StorageNode.obj)”或在“”中寻找)；正在链接对象，如同没有调试信息一样
+dbNode.lib(dbNode.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“dbNode.lib(dbNode.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+tableNode.lib(tableNode.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“tableNode.lib(tableNode.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+colNode.lib(colNode.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“colNode.lib(colNode.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+initSQL.lib(initSQL.obj) : warning LNK4099: 未找到 PDB“SQLLib.pdb”(使用“initSQL.lib(initSQL.obj)”或在“D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\SQLLib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+  XDSQL 1.0 simple.vcxproj -> D:\codes\XDSQL-1.0\XDSQL 1.0 simple\Debug\XDSQL 1.0 simple.exe

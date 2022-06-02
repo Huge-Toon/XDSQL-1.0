@@ -15,6 +15,7 @@
 #include "colsvalue.h"
 #include "condition.h"
 #include "conditiontype.h"
+#include "gram.tab.h"
 
 extern int yylex(void);
 void yyerror(const char* );
@@ -22,288 +23,392 @@ void yyerror(const char* );
 
 
 %union{
-	/*ID,string,Êı×Ö×ÖÃæÁ¿µÄÖµ*/
+	/* ID,string,æ•°å­—å­—é¢é‡çš„å€¼ */
 	class values* value;
-	/*µ¥¸öÁĞÁĞÔªÊı¾İµÄÖµ*/
+	/* å•ä¸ªåˆ—åˆ—å…ƒæ•°æ®çš„å€¼ */
 	class colinf* single_colinf;
-	/*¶à¸öÁĞµÄÁĞÔªÊı¾İ*/	
+	/* å¤šä¸ªåˆ—çš„åˆ—å…ƒæ•°æ® */	
 	class colsinf* colsinf;
-	/*ÁĞµÄÖµ*/
+	/* åˆ—çš„å€¼ */
 	class colvalue* colval;
-	/*¶à¸öÁĞµÄÖµ*/
+	/* å¤šä¸ªåˆ—çš„å€¼ */
 	class colsvalue* colsval;
-	/*ËãÊı±í´ïÊ½µÄÖµ*/
+	/* ç®—æ•°è¡¨è¾¾å¼çš„å€¼ */
 	int calval;
-	/*Ìõ¼ş±í´ïÊ½µÄÖµ*/
+	/* æ¡ä»¶è¡¨è¾¾å¼çš„å€¼ */
 	class condition* cond;
-	/*±È½Ï±í´ïÊ½×ó,ÓÒ²¿·ÖµÄÖµ*/
+	/* æ¯”è¾ƒè¡¨è¾¾å¼å·¦,å³éƒ¨åˆ†çš„å€¼ */
 	class conditiontype* comp;
 }
 
 
 
 
-/*ÖÕ½á·û*/
-%token CREATE USE SHOW DROP DATABASE DATABASES TABLE TABLES INSERT INTO VALUES 
+/* ç»ˆç»“ç¬¦ */
+%token CREATE USE SHOW DROP DELETE DATABASE DATABASES TABLE TABLES INSERT INTO VALUES 
 %token FROM WHERE SET UPDATE SELECT EXIT
 %token NEWLINE CHAR INT 
 %token<value> ID STRING NUMBER
 %token ',' ';' '.'
 
 
-/*·ÇÖÕ½á·û*/
+/* éç»ˆç»“ç¬¦ */
 %type<value> dbname tablename colname 
 %type<single_colinf> col coltype
 %type<colsinf> cols 
 %type<colval> colvalue setconf
 %type<colsval> colsvalue colsname tablecols setconfs tables tablecolconf
+%type<calval> cal comp_op
+%type<cond> conditions condition
+%type<comp> tablecol comparator
 
+/* ç®—æœ¯è¿ç®—ç¬¦ä¼˜å…ˆçº§ */
+%left '+' '-'
+%left '*' '/'
+%nonassoc UMINUS
 
+/* æ¯”è¾ƒè¿ç®—ç¬¦ä¼˜å…ˆçº§ */
+%left OR
+%left AND
+%left NOT
 
-/*ÎÄ·¨²úÉúÊ½*/
+/* æ–‡æ³•äº§ç”Ÿå¼ */
 %%
-start : line	{}
-	  | start line	{}
-;
-line  : NEWLINE	{cout<<endl<<"SQL>>";}
+start : line				{}
+	  | start line			{}
+      ;
+line  : NEWLINE				{cout<<endl<<"SQL>>";}
 	  | statement NEWLINE	{cout<<endl<<"SQL>>";}
-	 ;
+	  ;
 
-
-statement : createdb{}
-		  | usedb{}
-		  | showdb{}
-		  | dropdb{}
-		  | createsql{}
-		  | droptable {}
-		  | showtables	{}
-		  | inserttable	{}
-		  | deletetable	{}
-		  | updatetable	{}
-		  | selecttable	{}
-		  | exit	{}
+statement : createdb		{}
+		  | usedb			{}
+		  | showdb			{}
+		  | dropdb			{}
+		  | createsql		{}
+		  | droptable		{}
+		  | showtables		{}
+		  | inserttable		{}
+		  | deletetable		{}
+		  | updatetable		{}
+		  | selecttable		{}
+		  | exit			{}
 ;
 
 exit : EXIT		{ return 0;}
 ;
 
-/*´´½¨Êı¾İ¿â*/
-createdb : CREATE DATABASE dbname ';'	{
-	QueryProcessor qp;
-	qp.createDB($3->getStringValue());}
+/* åˆ›å»ºæ•°æ®åº“ */
+createdb : CREATE DATABASE dbname ';'					{
+															QueryProcessor qp;
+															qp.createDB($3->getStringValue());
+														}
 ;
 
-/*Ê¹ÓÃÊı¾İ¿â*/
-usedb : USE DATABASE dbname ';'	{
-	QueryProcessor qp;
-	qp.useDB($3->getStringValue());
-}
+/* ä½¿ç”¨æ•°æ®åº“ */
+usedb : USE DATABASE dbname ';'							{
+															QueryProcessor qp;
+															qp.useDB($3->getStringValue());
+														}
 ;
 
-/*Õ¹Ê¾¿âÔªÊı¾İ*/
-showdb : SHOW DATABASES ';'		{
-	QueryProcessor qp;
-	qp.showDB();
-}
+/* å±•ç¤ºåº“å…ƒæ•°æ® */
+showdb : SHOW DATABASES ';'								{
+															QueryProcessor qp;
+															qp.showDB();
+														}
 ;
 
-/*É¾³ıÊı¾İ¿â*/
-dropdb : DROP DATABASE dbname ';'	{
-	QueryProcessor qp;
-	qp.dropDB($3->getStringValue());
-}
+/* åˆ é™¤æ•°æ®åº“ */
+dropdb : DROP DATABASE dbname ';'						{
+															QueryProcessor qp;
+															qp.dropDB($3->getStringValue());
+														}
 ;
 
-dbname : ID		{	$$=$1;	}
+dbname : ID												{	$$=$1;	}
 ;
 
 
 
 
-/*´´½¨±í*/
+/* åˆ›å»ºè¡¨ */
 createsql : CREATE TABLE tablename '(' cols ')' ';'		{
-	QueryProcessor qp;
-	qp.createTable($3->getStringValue(),$5->vec);
-}
+															QueryProcessor qp;
+															qp.createTable($3->getStringValue(),$5->vec);
+														}
 ;
 
-tablename : ID	{$$=$1;}
+tablename : ID											{	$$=$1;	}
 ;
 
-cols : col	{
-	$$=new colsinf();
-	($$->vec).push_back($1);
-	 }
-	 | cols ',' col		{
-	 $$=$1;
-	 ($$->vec).push_back($3);
-	 }
+cols :		col											{
+															$$=new colsinf();
+															($$->vec).push_back($1);
+														}
+			| cols ',' col								{
+															$$=$1;
+															($$->vec).push_back($3);
+														}
 ;
 
-col : colname coltype {
-	$$=$2;
-	$$->setColName($1->getStringValue());
-}
+col : colname coltype									{
+															$$=$2;
+															$$->setColName($1->getStringValue());
+														}
 ;
 
-colname : ID	{$$=$1;}
+colname : ID											{	$$=$1;	}
 ;
 
-coltype : INT	{
-		 $$=new colinf();
-		 $$->setColType(3);
-		 $$->setColLength(4);
-		}
-		| CHAR '(' NUMBER ')'	{
-		 $$=new colinf();
-		 $$->setColType(2);
-		 $$->setColLength($3->getDigitsValue());
-		}
+coltype : INT											{
+															$$=new colinf();
+															$$->setColType(3);
+															$$->setColLength(4);
+														}
+		| CHAR '(' NUMBER ')'							{
+															$$=new colinf();
+															$$->setColType(2);
+															$$->setColLength($3->getDigitsValue());
+														}
 ;
 
-/*É¾³ı±í*/
-droptable : DROP TABLE tablename ';'	{
-	QueryProcessor qp;
-	qp.dropTable($3->getStringValue());
-}
+/* åˆ é™¤è¡¨ */
+droptable : DROP TABLE tablename ';'					{
+															QueryProcessor qp;
+															qp.dropTable($3->getStringValue());
+														}
 ;
 
-/*Õ¹Ê¾Êı¾İ¿âÖĞµÄ±íÔªÊı¾İºÍÁĞÔªÊı¾İ*/
-showtables : SHOW TABLES ';'		{
-	QueryProcessor qp;
-	qp.showTable();
-}
+/* å±•ç¤ºæ•°æ®åº“ä¸­çš„è¡¨å…ƒæ•°æ®å’Œåˆ—å…ƒæ•°æ® */
+showtables : SHOW TABLES ';'							{
+															QueryProcessor qp;
+															qp.showTable();
+														}
 ;
 
 
 
-
-/*½«Ôª×é²åÈë±í*/
-inserttable : INSERT INTO tablename VALUES '(' colsvalue ')' ';'	{
-	QueryProcessor qp;
-	qp.insertTable($3->getStringValue(),*$6,1);
-}
+/* å°†å…ƒç»„æ’å…¥è¡¨ */
+inserttable : INSERT INTO tablename VALUES '(' colsvalue ')' ';'					{
+																						QueryProcessor qp;
+																						qp.insertTable($3->getStringValue(), *$6, 1);
+																					}
 			| INSERT INTO tablename '(' colsname ')' VALUES '(' colsvalue ')' ';'	{
-	/*ÏÈ½«colsenameÖĞµÄ±íÃûÒÀ´Î¼ÓÈëcolsnameµÄÈİÆ÷ÖĞ*/
-	for(int i=0;i<$9->vec.size();i++){
-		$9->vec[i]->setColName($5->vec[i]->getColName());
-	}
-	/*ÊÍ·ÅcolsnameµÄÄÚ´æ*/
-	delete $5;
+																						/* å…ˆå°†colsnameä¸­çš„è¡¨åä¾æ¬¡åŠ å…¥colsnameçš„å®¹å™¨ä¸­ */
+																						for(int i=0;i<$9->vec.size();i++){
+																							$9->vec[i]->setColName($5->vec[i]->getColName());
+																						}
+																						/* é‡Šæ”¾colsnameçš„å†…å­˜ */
+																						delete $5;
 
-	QueryProcessor qp;	
-	qp.insertTable($3->getStringValue(),*$9,2);
-}
+																						QueryProcessor qp;	
+																						qp.insertTable($3->getStringValue(), *$9, 2);
+																					}
 ;
 
-colsname : colname	{
-	$$=new colsvalue();
-	string str=$1->getStringValue();
-	colvalue* cv=new colvalue();
-	cv->setColName(str);
-	($$->vec).push_back(cv);
-}
-		 | colsname ',' colname{
-	string str=$3->getStringValue();
-	colvalue* cv=new colvalue();
-	cv->setColName(str);
-	$$=$1;
-	($$->vec).push_back(cv);
-}
+colsname : colname																	{
+																						$$=new colsvalue();
+																						string str=$1->getStringValue();
+																						colvalue* cv=new colvalue();
+																						cv->setColName(str);
+																						($$->vec).push_back(cv);
+																					}
+		 | colsname ',' colname														{
+																						string str=$3->getStringValue();
+																						colvalue* cv=new colvalue();
+																						cv->setColName(str);
+																						$$=$1;
+																						($$->vec).push_back(cv);
+																					}
 
-colsvalue : colvalue		{
-	$$=new colsvalue();
-	($$->vec).push_back($1);
-}
-		  | colsvalue ',' colvalue	{
-	$$=$1;
-	($$->vec).push_back($3);   
-}
+colsvalue : colvalue																{
+																						$$=new colsvalue();
+																						($$->vec).push_back($1);
+																					}
+		  | colsvalue ',' colvalue													{
+																						$$=$1;
+																						($$->vec).push_back($3);   
+																					}
 ;
 
-colvalue : cal	{
-	$$=new colvalue();
-	$$->setColType(3);
-	$$->setDigitsValue($1);
-}
-		 | STRING	{
-	$$=new colvalue();
-	$$->setColType(2);
-	$$->setStringValue($1->getStringValue());
-}
+colvalue : cal																		{
+																						$$=new colvalue();
+																						$$->setColType(3);
+																						$$->setDigitsValue($1);
+																					}
+		 | STRING																	{
+																						$$=new colvalue();
+																						$$->setColType(2);
+																						$$->setStringValue($1->getStringValue());
+																					}
 ;
 
-/*ËãÊı±í´ïÊ½*/
-
-
-
-
-
-
-/*Âß¼­±í´ïÊ½*/
-
- 
-/*±È½Ï±í´ïÊ½*/
-
-
-/*±È½ÏÔËËã·û*/
-
-
-/*±íÃû.ÁĞÃûĞÎÊ½»òÁĞÃûĞÎÊ½*/
-
-
-
-
-
-
-
-/*É¾³ıÔª×é*/
-
-
-
-
-
-/*¸üĞÂÔª×é*/
-updatetable : UPDATE tablename SET setconfs ';'		{
-	QueryProcessor qp;
-	qp.updateTable($2->getStringValue(),*$4,NULL);
-}
-			| UPDATE tablename SET setconfs WHERE conditions ';'	{
-	QueryProcessor qp;		
-	qp.updateTable($2->getStringValue(),*$4,$6);
-}
+/* ç®—æœ¯è¡¨è¾¾å¼ */
+cal : cal '+' cal																	{	$$=$1*$3;	}
+	 |cal '-' cal																	{	$$=$1-$3;	}
+	 |cal '*' cal																	{	$$=$1*$3;	}
+	 |cal '/' cal																	{	$$=$1/$3;	}
+	 |'(' cal ')'																	{	$$=$2;		}
+	 |'-' cal %prec UMINUS															{	$$=-$2;		}
+	 |NUMBER																		{	$$=$1->getDigitsValue();}		
 ;
 
-/*¸üĞÂ¸³ÖµµÄÓï¾ä*/
-setconfs : setconf	{
-	$$=new colsvalue();
-	($$->vec).push_back($1);
-}
-		 | setconfs ',' setconf		{
-	$$=$1;
-	($$->vec).push_back($3);	 
-}
+
+/* é€»è¾‘è¡¨è¾¾å¼ */
+conditions : conditions AND conditions												{	
+																						/* åˆ›å»ºä¸€ä¸ªæ–°çš„conditionèŠ‚ç‚¹ä½œä¸ºç”Ÿæˆæ ‘çš„æ ¹èŠ‚ç‚¹ */
+																						$$=new condition();
+
+																						/* è®¾ç½®æ ¹èŠ‚ç‚¹çš„iscondç­‰æˆå‘˜å˜é‡ */
+																						$$->iscond=true;
+																						$$->comp_cond=1;
+																						/* å°†ANDå·¦å³çš„ä¸¤ä¸ªè¡¨è¾¾å¼ä½œä¸ºå­å¥³èŠ‚ç‚¹åŠ å…¥ç”Ÿæˆæ ‘ */
+																						$$->left.type=4;
+																						$$->right.type=4;
+																						$$->left.cond=$1;
+																						$$->right.cond=$3;
+																					}
+			 |conditions OR conditions												{	
+																						/* åˆ›å»ºä¸€ä¸ªæ–°çš„conditionèŠ‚ç‚¹ä½œä¸ºç”Ÿæˆæ ‘çš„æ ¹èŠ‚ç‚¹ */
+																						$$=new condition();
+
+																						/* è®¾ç½®æ ¹èŠ‚ç‚¹çš„iscondç­‰æˆå‘˜å˜é‡ */
+																						$$->iscond=true;
+																						$$->comp_cond=2;
+
+																						/* å°†ANDå·¦å³çš„ä¸¤ä¸ªè¡¨è¾¾å¼ä½œä¸ºå­å¥³èŠ‚ç‚¹åŠ å…¥ç”Ÿæˆæ ‘ */
+																						$$->left.type=4;
+																						$$->right.type=4;
+																						$$->left.cond=$1;
+																						$$->right.cond=$3;
+																					}
+			 |NOT conditions														{	
+																						/* åˆ›å»ºä¸€ä¸ªæ–°çš„conditionèŠ‚ç‚¹ä½œä¸ºç”Ÿæˆæ ‘çš„æ ¹èŠ‚ç‚¹ */
+																						$$=new condition();
+
+																						/* è®¾ç½®æ ¹èŠ‚ç‚¹çš„iscondç­‰æˆå‘˜å˜é‡ */
+																						$$->iscond=true;
+																						$$->comp_cond=3;
+
+																						/* å°†ANDå·¦å³çš„ä¸¤ä¸ªè¡¨è¾¾å¼ä½œä¸ºå­å¥³èŠ‚ç‚¹åŠ å…¥ç”Ÿæˆæ ‘ */
+																						$$->left.type=4;
+																						$$->right.type=4;
+
+																						/* å¯¹äºäº§ç”Ÿå¼å³éƒ¨ä¸ºNOT conditionsçš„æƒ…å†µï¼Œç”Ÿæˆæ ‘çš„æ ¹èŠ‚ç‚¹çš„å·¦å­å¥³èŠ‚ç‚¹ä¸ºç©º */
+																						$$->left.cond=NULL;
+																						$$->right.cond=$2;
+																					}
+			 |condition																{	$$=$1;	}
+			 |'(' conditions ')'													{	$$=$2;	}
 ;
 
-setconf : tablecol '=' STRING	{
-	$$=$1->col;
-	$$->setStringValue($3->getStringValue());
-}
-		| tablecol '=' cal	{
-	$$=$1->col;
-	$$->setDigitsValue($3);
-}
+/* æ¯”è¾ƒè¡¨è¾¾å¼ */
+condition : comparator comp_op comparator											{
+																						$$=new condition();
+																						$$->iscond=false;
+																						$$->comp_op=$2;
+																						$$->left =*$1;
+																						$$->right =*$3;
+																					}
 ;
 
-/*´¿ÁĞÃû»ò±íÃû.ÁĞÃûĞÎÊ½*/
-tablecols : tablecol	{
-	$$=new colsvalue();
-	($$->vec).push_back($1->col);
-}
-		  | tablecols ',' tablecol	{
-	$$=$1;
-	($$->vec).push_back($3->col);	  
-}
+comparator : cal																	{	
+																						$$=new conditiontype();
+																						$$->type=3;
+																						$$->digits=$1;
+																					}
+			|STRING																	{		
+																						$$=new conditiontype();
+																						$$->type=2;
+																						$$->str=$1->getStringValue();
+																					}
+			|tablecol																{
+																						$$=$1;
+																					}
+
+/* æ¯”è¾ƒè¿ç®—ç¬¦ */
+comp_op :	 '<'																	{	$$=1;	}
+			|'>'																	{	$$=2;	}
+			|'<' '='																{	$$=3;	}
+			|'>' '='																{	$$=4;	}
+			|'='																	{	$$=5;	}
+			|'!' '='																{	$$=6;	}
+;
+
+/* è¡¨å.åˆ—åå½¢å¼æˆ–åˆ—åå½¢å¼ */
+tablecol :	tablename '.' colname													{	
+																						$$=new conditiontype();
+																						$$->type=1;
+																						$$->col=new colvalue();
+																						$$->col->setColName($3->getStringValue());
+																						$$->col->setTableName($1->getStringValue());
+																					}
+			|colname																{	
+																						$$=new conditiontype();
+																						$$->type=1;
+																						$$->col=new colvalue();
+																						$$->col->setColName($1->getStringValue());
+																					}
+;
+
+
+
+
+
+/* åˆ é™¤å…ƒç»„ */
+deletetable : DELETE FROM tablename ';'										{
+																				QueryProcessor qp;
+																				qp.deleteTable($3->getStringValue(),NULL);
+																			}
+			|DELETE FROM tablename WHERE conditions ';'						{
+																				QueryProcessor qp;
+																				qp.deleteTable($3->getStringValue(),$5);
+																			}
+
+
+
+/* æ›´æ–°å…ƒç»„ */
+updatetable : UPDATE tablename SET setconfs ';'								{
+																				QueryProcessor qp;
+																				qp.updateTable($2->getStringValue(),*$4,NULL);
+																			}
+			| UPDATE tablename SET setconfs WHERE conditions ';'			{
+																				QueryProcessor qp;		
+																				qp.updateTable($2->getStringValue(),*$4,$6);
+																			}
+;
+
+/* æ›´æ–°èµ‹å€¼çš„è¯­å¥ */
+setconfs : setconf															{
+																				$$=new colsvalue();
+																				($$->vec).push_back($1);
+																			}
+		 | setconfs ',' setconf												{
+																				$$=$1;
+																				($$->vec).push_back($3);	 
+																			}
+																			;
+
+setconf : tablecol '=' STRING												{
+																				$$=$1->col;
+																				$$->setStringValue($3->getStringValue());
+																			}
+		| tablecol '=' cal													{
+																				$$=$1->col;
+																				$$->setDigitsValue($3);
+																			}
+;
+
+/* çº¯åˆ—åæˆ–è¡¨å.åˆ—åå½¢å¼ */
+tablecols : tablecol														{
+																				$$=new colsvalue();
+																				($$->vec).push_back($1->col);
+																			}
+		  | tablecols ',' tablecol											{
+																				$$=$1;
+																				($$->vec).push_back($3->col);	  
+																			}
 ;
 
 
@@ -311,41 +416,38 @@ tablecols : tablecol	{
 
 
 /*select table*/
-selecttable : SELECT tablecolconf FROM tables ';'	{
-	QueryProcessor qp;
-	qp.selectTable(*$4,*$2,NULL);
-}
-			| SELECT tablecolconf FROM tables WHERE conditions ';'	{
-	QueryProcessor qp;
-	qp.selectTable(*$4,*$2,$6);		
-}
+selecttable : SELECT tablecolconf FROM tables ';'							{
+																				QueryProcessor qp;
+																				qp.selectTable(*$4,*$2,NULL);
+																			}
+			| SELECT tablecolconf FROM tables WHERE conditions ';'			{
+																				QueryProcessor qp;
+																				qp.selectTable(*$4,*$2,$6);		
+																			}
 ;
 
-tablecolconf : '*'	{
-	$$=new colsvalue();
-	$$->isALL=true;
-}
-			 | tablecols	{
-	$$=$1;				
-}
+tablecolconf : '*'															{
+																				$$=new colsvalue();
+																				$$->isALL=true;
+																			}
+			 | tablecols													{
+																				$$=$1;				
+																			}
 ;
 
-tables : tablename	{
-	$$=new colsvalue();
-	colvalue* cv=new colvalue();
-	cv->setTableName($1->getStringValue());
-	($$->vec).push_back(cv);
-}
-	   | tables ',' tablename	{
-	$$=$1;
-	colvalue* cv=new colvalue();
-	cv->setTableName($3->getStringValue());
-	($$->vec).push_back(cv);
-}
+tables : tablename															{
+																				$$=new colsvalue();
+																				colvalue* cv=new colvalue();
+																				cv->setTableName($1->getStringValue());
+																				($$->vec).push_back(cv);
+																			}
+	   | tables ',' tablename												{
+																				$$=$1;
+																				colvalue* cv=new colvalue();
+																				cv->setTableName($3->getStringValue());
+																				($$->vec).push_back(cv);
+																			}
 ;
-
-
-
 
 
 

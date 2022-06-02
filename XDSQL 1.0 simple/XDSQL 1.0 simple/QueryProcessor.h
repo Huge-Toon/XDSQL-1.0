@@ -39,7 +39,7 @@ public:
 	/*****************************************************************************
 	* @name    : createDB
 	* @input   : 数据库名称(不带路径)
-	* @output  : 
+	* @output  :
 	* @brief   : 创建一个新的数据库
 	*****************************************************************************/
 	void createDB(string dbname);
@@ -77,7 +77,7 @@ public:
 	void showDB();
 
 
-		
+
 
 	/*****************************************************************************
 	* @name    : createTable
@@ -85,7 +85,7 @@ public:
 	* @output  :
 	* @brief   : 在当前数据库中创建用户数据表
 	*****************************************************************************/
-	void createTable(string tablename,vector<colinf*> cols);
+	void createTable(string tablename, vector<colinf*> cols);
 
 
 
@@ -119,7 +119,7 @@ public:
 	* @output  :
 	* @brief   : 将一个元组插入当前数据库下的用户数据表
 	*****************************************************************************/
-	void insertTable(string tablename,colsvalue cols, int pattern);
+	void insertTable(string tablename, colsvalue cols, int pattern);
 
 
 
@@ -127,10 +127,10 @@ public:
 	/*****************************************************************************
 	* @name    : deleteTable
 	* @input   : 表名,条件表达式对应的生成树的根节点。若root为NULL，则不使用条件查询
-	* @output  : 
+	* @output  :
 	* @brief   : 删除数据库中(满足条件)的行
 	*****************************************************************************/
-	void deleteTable(string tablename,condition* root);
+	void deleteTable(string tablename, condition* root);
 
 
 
@@ -143,9 +143,9 @@ public:
 	* @output  :
 	* @brief   : 更新元组。若root为NULL,更新所有的元组
 	*****************************************************************************/
-	void updateTable(string tablename,colsvalue setconf,condition* root);
+	void updateTable(string tablename, colsvalue setconf, condition* root);
 
-	
+
 
 
 
@@ -155,8 +155,7 @@ public:
 	* @output  :
 	* @brief   : 查询表。若root为NULL,则选择所有的元组
 	*****************************************************************************/
-	void selectTable(colsvalue tables,colsvalue tablecolsconf ,condition* root);
-
+	void selectTable(colsvalue tables, colsvalue tablecolsconf, condition* root);
 
 
 private:
@@ -172,7 +171,7 @@ private:
 	* @output  :
 	* @brief   : 将dataarray与表达式生成树的列名绑定起来
 	*****************************************************************************/
-	void conditionLinkData(vector<colvalue*>& dataarray,condition* root);
+	void conditionLinkData(vector<colvalue*>& dataarray, condition* root);
 
 
 
@@ -193,11 +192,11 @@ private:
 	* @name    :
 	* @input   : index:表的顺序(从0开始)	row:储存临时表元组的字节数组
 	*			 start:当前数据写入row的起始位置
-	* @output  : 
-	* @brief   : 将tables中的表按顺序进行笛卡尔积运算,并储存到临时表tamp.dat中
+	* @output  :
+	* @brief   : 将tables中的表按顺序进行笛卡尔积运算,并储存到临时表temp.dat中
 	*****************************************************************************/
-	void tableJoin(vector<colvalue*> tables,int index,char* row, int start);
-	
+	void tableJoin(vector<colvalue*> tables, int index, char* row, int start);
+
 
 
 

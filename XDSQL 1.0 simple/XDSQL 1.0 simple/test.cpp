@@ -7,16 +7,16 @@
 
 
 
-/* ²âÊÔÄ£¿é */
+/* æµ‹è¯•æ¨¡å— */
 int main(void) {
-	/*³õÊ¼»¯*/
-	MetaDataManager mdm=initSQL::init();
+	/* åˆå§‹åŒ– */
+	MetaDataManager mdm = initSQL::init();
 	QueryProcessor::init(&mdm);
 
-	cout << endl<<"SQL>>" ;
+	cout << endl << "SQL>>";
 	int i = 0;
 
-	while (yyparse()!=0) { }
+	while (yyparse() != 0) {}
 
 	return 0;
 }

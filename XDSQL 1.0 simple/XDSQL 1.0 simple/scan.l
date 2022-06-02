@@ -61,7 +61,7 @@ exit		{return EXIT;}
 "=" |
 "<" |
 ">" |
-"!" {return yytext[0];}
+"!" {return *yytext;}
 
 \n	{return NEWLINE;}
 
@@ -72,7 +72,8 @@ exit		{return EXIT;}
 	int type=1;
 	char* array=yytext;
 	yylval.value=new values(type,array);
-	return ID;}
+	return ID;
+}
 
 {digits}	{
 	int type=3;

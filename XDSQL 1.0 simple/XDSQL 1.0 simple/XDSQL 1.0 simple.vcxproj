@@ -54,7 +54,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\..\..\..\..\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.props" />
+    <Import Project="..\..\..\..\Program Files\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -160,7 +160,9 @@
     <ClInclude Include="values.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gram.tab.cpp" />
     <ClCompile Include="QueryProcessor.cpp" />
+    <ClCompile Include="scan.flex.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +173,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\..\..\..\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets" />
+    <Import Project="..\..\..\..\Program Files\win_flex_bison\custom_build_rules\win_flex_bison_custom_build.targets" />
   </ImportGroup>
 </Project>

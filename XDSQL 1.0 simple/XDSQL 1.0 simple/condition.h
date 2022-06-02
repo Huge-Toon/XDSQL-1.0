@@ -22,7 +22,7 @@ public:
 	conditiontype left;
 	conditiontype right;
 
-	/*true表示该表达式运算符为逻辑运算符，否则为算术运算符*/
+	/*true表示该表达式运算符为逻辑运算符，否则为比较运算符*/
 	bool iscond;
 
 	/*比较运算符,1:<   2:>  3:<=  4:>=  5:=  6:!=*/
@@ -40,11 +40,11 @@ public:
 
 	/*****************************************************************************
 	* @name    : dealConditions
-	* @input   : 
+	* @input   :
 	* @output  : pair的first是子树的result值,second是子树的isunknown值
 	* @brief   : 计算以当前对象为根节点的生成树的逻辑值，设置自身的result成员并返回
 	*****************************************************************************/
-	pair<bool,bool> dealConditions();
+	pair<bool, bool> dealConditions();
 
 
 
@@ -64,7 +64,7 @@ public:
 	/*****************************************************************************
 	* @name    : addTableName
 	* @input   :
-	* @output  : 
+	* @output  :
 	* @brief   : 在delete和update中可能从SQL引擎获取的colvalue对象中没有tablename成员
 	*			 所以手动加上
 	*****************************************************************************/
@@ -82,8 +82,8 @@ public:
 				 tablename数据
 	*****************************************************************************/
 	void addTableName(MetaDataManager* mdm,
-					  string dbname,
-					  vector<colvalue*> tables);
+		string dbname,
+		vector<colvalue*> tables);
 
 
 

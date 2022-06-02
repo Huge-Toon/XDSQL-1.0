@@ -7,7 +7,7 @@ using namespace std;
 
 
 /*****************************************************************************
-* @author  : Jiajun Chang,Hongguang Zhao                                                             *
+* @author  : Jiajun Chang,Hongguang Zhao
 * @date    :
 * @file    :
 * @brief   : 储存id,string或数字字面量的值
@@ -17,10 +17,10 @@ public:
 	/*****************************************************************************
 	* @name    : values
 	* @input   : 终结符类型，储存终结符属性的字符串
-	* @output  : 
+	* @output  :
 	* @brief   : 构造函数
 	*****************************************************************************/
-	values(int type,char* array);
+	values(int type, char* array);
 
 
 

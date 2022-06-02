@@ -50,29 +50,30 @@ extern int yydebug;
      USE = 259,
      SHOW = 260,
      DROP = 261,
-     DATABASE = 262,
-     DATABASES = 263,
-     TABLE = 264,
-     TABLES = 265,
-     INSERT = 266,
-     INTO = 267,
-     VALUES = 268,
-     FROM = 269,
-     WHERE = 270,
-     SET = 271,
-     UPDATE = 272,
-     SELECT = 273,
-     EXIT = 274,
-     DELETE = 275,
+     DELETE = 262,
+     DATABASE = 263,
+     DATABASES = 264,
+     TABLE = 265,
+     TABLES = 266,
+     INSERT = 267,
+     INTO = 268,
+     VALUES = 269,
+     FROM = 270,
+     WHERE = 271,
+     SET = 272,
+     UPDATE = 273,
+     SELECT = 274,
+     EXIT = 275,
      NEWLINE = 276,
      CHAR = 277,
      INT = 278,
      ID = 279,
      STRING = 280,
      NUMBER = 281,
-     OR = 282,
-     AND = 283,
-     NOT = 284
+     UMINUS = 282,
+     OR = 283,
+     AND = 284,
+     NOT = 285
    };
 #endif
 
@@ -81,28 +82,28 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 27 "gram.y"
+#line 25 "gram.y"
 
-	/*ID,string,Êı×Ö×ÖÃæÁ¿µÄÖµ*/
+	/* ID,string,æ•°å­—å­—é¢é‡çš„å€¼ */
 	class values* value;
-	/*µ¥¸öÁĞÁĞÔªÊı¾İµÄÖµ*/
+	/* å•ä¸ªåˆ—åˆ—å…ƒæ•°æ®çš„å€¼ */
 	class colinf* single_colinf;
-	/*¶à¸öÁĞµÄÁĞÔªÊı¾İ*/	
+	/* å¤šä¸ªåˆ—çš„åˆ—å…ƒæ•°æ® */	
 	class colsinf* colsinf;
-	/*ÁĞµÄÖµ*/
+	/* åˆ—çš„å€¼ */
 	class colvalue* colval;
-	/*¶à¸öÁĞµÄÖµ*/
+	/* å¤šä¸ªåˆ—çš„å€¼ */
 	class colsvalue* colsval;
-	/*ËãÊı±í´ïÊ½µÄÖµ*/
+	/* ç®—æ•°è¡¨è¾¾å¼çš„å€¼ */
 	int calval;
-	/*Ìõ¼ş±í´ïÊ½µÄÖµ*/
+	/* æ¡ä»¶è¡¨è¾¾å¼çš„å€¼ */
 	class condition* cond;
-	/*±È½Ï±í´ïÊ½×ó,ÓÒ²¿·ÖµÄÖµ*/
+	/* æ¯”è¾ƒè¡¨è¾¾å¼å·¦,å³éƒ¨åˆ†çš„å€¼ */
 	class conditiontype* comp;
 
 
 /* Line 2058 of yacc.c  */
-#line 106 "gram.tab.h"
+#line 107 "gram.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
